@@ -25,6 +25,37 @@ Aplikasi web interaktif berbasis **Streamlit** untuk mendemonstrasikan, menguji,
 
 ---
 
+## 🎯 Target Pengguna & Penerima Manfaat (Untuk Siapa?)
+
+Proyek ini dirancang secara khusus untuk 4 kelompok pemangku kepentingan utama:
+
+1. **🏫 Institusi Pendidikan (Sekolah, Madrasah, Universitas, & Yayasan):**
+   * **Pengguna:** Kepala Sekolah, Wakil Kepala Sekolah, Kepala Tata Usaha, Bendahara, dan Komite Sekolah.
+   * **Manfaat:** Mencegah otorisasi sepihak atau pemalsuan dokumen penting (Surat Keputusan Kelulusan, Ijazah Digital, RAPBS/RAB, dan Laporan Pertanggungjawaban Dana BOS). Dokumen hanya sah bila disetujui kuorum bersama.
+2. **🏛️ Instansi Pemerintah & Sektor Publik (Birokrasi / SPBE):**
+   * **Pengguna:** Pejabat Pembuat Komitmen (PPK), Kuasa Pengguna Anggaran (KPA), Tim Pengadaan Barang/Jasa (LPSE), dan Inspektorat Daerah.
+   * **Manfaat:** Menghilangkan *Single Point of Failure* (titik kegagalan tunggal) pada penandatanganan kontrak proyek negara bernilai miliaran rupiah dan Berita Acara Serah Terima (BAST).
+3. **💼 Korporasi, Perbankan, & Lembaga Hukum (Enterprise & Fintech):**
+   * **Pengguna:** Dewan Direksi (*Board of Directors*), Dewan Komisaris, Tim *Treasury*, dan Notaris.
+   * **Manfaat:** Pengesahan Perjanjian Kerjasama (PKS) dan otorisasi pencairan dana multi-pihak (*multi-party wire approval*) yang tahan dari ancaman pemecahan kunci di masa depan.
+4. **🔬 Peneliti, Akademisi, & Mahasiswa Pascasarjana (Riset & Publikasi):**
+   * **Pengguna:** Peneliti bidang Keamanan Siber, Kriptografi Terapan, dan Informatika Forensik.
+   * **Manfaat:** Menyediakan artefak ilmiah lengkap yang dapat direplikasi (*reproducible research*), menjawab 4 Pertanyaan Riset (RQ1–RQ4), dilengkapi dataset benchmark 30 repetisi (Median & IQR), serta suite uji model ancaman otomatis.
+
+---
+
+## ⚠️ 5 Isu Kritis & Masalah Nyata yang Diselesaikan
+
+| No | Isu Kritis (Problem Statement) | Penjelasan Masalah Nyata di Lapangan | Solusi Kriptografis Proyek Ini |
+|:---:|:---|:---|:---|
+| **1** | **Ancaman Komputer Kuantum (*Harvest Now, Decrypt Later*)** | Dokumen resmi (Ijazah, SK, Sertifikat) harus sah puluhan tahun. Kriptografi saat ini (RSA / ECDSA) dapat dipecahkan oleh komputer kuantum di masa depan menggunakan Algoritma Shor. | Migrasi ke standar pasca-kuantum resmi **NIST FIPS 204 (ML-DSA-65)** berbasis kisi (*lattice-based cryptography*). |
+| **2** | **Titik Kegagalan Tunggal & Otorisasi Sepihak (*Key Compromise*)** | Pada sistem biasa, satu orang memegang kunci privat utuh. Jika token USB/laptop pejabat dicuri atau disalahgunakan, dokumen palsu dapat disahkan sendirian. | Menerapkan **Threshold Cryptography ($k$-dari-$n$)** tanpa *key escrow*. Kunci dipecah menjadi share lokal independen; tidak ada 1 pihak pun yang memegang kunci utuh. |
+| **3** | **Pembengkakan Ukuran Berkas Multi-Pihak (*Multisig Size Bloat / RQ1*)** | Jika tanda tangan multi-pihak dikumpulkan berderet (*multisig biasa*), ukuran file membengkak secara linear $O(k)$ (>16.5 KB untuk 5 penanda tangan), membebani jaringan sekolah/kantor. | Skema **Threshold sejati** memadatkan kuorum menjadi **satu tanda tangan tunggal berukuran konstan $O(1) = 3.309\text{ Bytes}$** (hemat ukuran hingga 80%). |
+| **4** | **Pemalsuan Alur & Replay Attack (*Serangan Pemutaran Ulang / RQ3*)** | Tanda tangan sah dari surat edaran biasa rawan diputar ulang (*replay*) penyerang ke dokumen anggaran (RAB), atau daftar nama pejabat diganti pihak lain. | Lapisan pengikat **`THRESHDOC-v0`** (SHA3-256) mengikat mutlak: isi biner berkas (Word/Excel/PDF), nomor ID surat, ambang $k$, dan identitas seluruh penanda tangan. |
+| **5** | **Ketiadaan Dukungan Asli PDF/PAdES Terhadap OID Baru (*Interoperabilitas / RQ2*)** | Pembaca PDF umum (Adobe Acrobat, PDF.js, pyHanko) belum mengenali OID resmi ML-DSA FIPS 204 secara native, sehingga menandai dokumen sebagai *unrecognized format*. | Memetakan temuan negatif tersebut secara jujur dan merumuskan solusi **Hybrid Co-Signature** (kontainer ASN.1 CMS RFC 5652 dengan tanda tangan visual ganda). |
+
+---
+
 ## Fitur Utama
 
 1. **📁 Dukungan Multi-Format Dokumen Resmi Institusi:**

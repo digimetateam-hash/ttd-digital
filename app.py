@@ -466,6 +466,22 @@ with tab5:
     **Judul Riset:** *Threshold Post-Quantum Document Signing for Institutional Workflows: Design, Integration, and Empirical Evaluation*  
     **Target Waktu:** 8–10 Minggu | **Fokus:** Studi Terapan & Evaluasi Sistem Realistis
     
+    ---
+    ### 🎯 Target Pengguna & Penerima Manfaat (Untuk Siapa?)
+    1. **🏫 Institusi Pendidikan (Sekolah, Madrasah, Universitas):** Kepala Sekolah, Wakasek, TU, Bendahara, dan Komite untuk pengesahan Ijazah, SK Kelulusan, dan RAPBS/BOS.
+    2. **🏛️ Instansi Pemerintah & Sektor Publik:** PPK, KPA, dan Tim LPSE untuk pengadaan barang/jasa dan BAST tanpa *Single Point of Failure*.
+    3. **💼 Korporasi & Lembaga Hukum:** Dewan Direksi & Komisaris untuk otorisasi transaksi besar dan PKS multi-pihak.
+    4. **🔬 Peneliti & Akademisi:** Menyediakan artefak ilmiah lengkap (RQ1–RQ4, benchmark 30 runs, dan pembuktian model ancaman).
+
+    ---
+    ### ⚠️ 5 Isu Kritis yang Diselesaikan
+    1. **Ancaman Komputer Kuantum:** RSA/ECDSA dapat dipecahkan Algoritma Shor $\rightarrow$ Diganti **NIST FIPS 204 (ML-DSA-65)**.
+    2. **Titik Kegagalan Tunggal:** 1 orang memegang kunci utuh rawan dicuri/disalahgunakan $\rightarrow$ Skema **Threshold ($k$-dari-$n$)** tanpa *key escrow*.
+    3. **Ukuran File Multisig Membengkak ($O(k)$):** 5 penanda tangan mencapai >16.5 KB $\rightarrow$ **Threshold sejati ($O(1) = 3309\text{ B}$)** hemat 80%.
+    4. **Serangan Replay Lintas Dokumen:** Tanda tangan diputar ulang ke surat lain $\rightarrow$ Pengikat **`THRESHDOC-v0`** (SHA3-256) mengikat mutlak konten, nomor surat, $k$, dan signer.
+    5. **Keterbatasan PDF Legacy:** PDF pembaca umum belum kenal OID ML-DSA $\rightarrow$ Arsitektur **Hybrid Co-Signature** (CMS SignedData).
+    
+    ---
     #### 4 Pertanyaan Riset Utama:
     1. **RQ1:** Berapa overhead ukuran tanda tangan, latensi, dan komunikasi skema threshold dibanding baseline multisig?
     2. **RQ2:** Apakah tanda tangan keluaran diterima verifier FIPS 204 standar di dalam kontainer dokumen resmi?
