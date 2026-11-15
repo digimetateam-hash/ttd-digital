@@ -102,3 +102,4 @@ flowchart LR
 | **2028** | **Adopsi Instansi Publik** | Pilot project implementasi pada 5 Universitas Negeri dan 3 Dinas Pemerintah Daerah (SPBE). |
 | **2029** | **Desentralisasi & Mobile** | Peluncuran aplikasi mobile biometrik (Secure Enclave) dan jaringan konsensus kuorum P2P. |
 | **2030** | **Kesiapan Penuh Era Kuantum (Q-Day)** | Seluruh dokumen dan arsip nasional telah 100% bermigrasi ke skema threshold pasca-kuantum FIPS 204. |
+
