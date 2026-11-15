@@ -8,3 +8,14 @@ venv/
 .idea/
 .vscode/
 
+# Secrets & Environment variables
+.env
+.env.*
+.streamlit/secrets.toml
+secrets.toml
+
+# Certificates and keys
+*.key
+*.pem
+*.crt
+*.sig
