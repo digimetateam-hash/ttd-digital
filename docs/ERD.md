@@ -128,3 +128,4 @@ erDiagram
 4. **`DOCUMENT` & `SIGNING_SESSION`**: Menjamin pengikatan dokumen melalui *domain separation* `THRESHDOC-v0` pada tingkat digest ($H(\text{dokumen}, \text{ID}, k, \text{daftar})$).
 5. **`PARTIAL_SIGNATURE` & `FINAL_SIGNATURE`**: Menyimpan tanda tangan parsial yang dikumpulkan koordinator hingga mencapai kuorum $\ge k$, lalu digabungkan menjadi tanda tangan standar FIPS 204 yang kompatibel dengan verifier biasa.
 6. **`AUDIT_LOG`**: Memenuhi kebutuhan non-fungsional tata kelola institusi (mencatat siapa menyetujui dokumen apa, kapan, dan dari perangkat mana, dilengkapi hashing berantai anti-manipulasi).
+
