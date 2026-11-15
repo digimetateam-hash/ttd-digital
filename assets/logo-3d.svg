@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#0f172a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- 3D Shield Faces Gradients -->
+    <linearGradient id="shieldLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="40%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="shieldRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+
+    <linearGradient id="shieldTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+
+    <!-- Glassmorphic Document Gradients -->
+    <linearGradient id="docFront" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#e2e8f0" stop-opacity="0.75"/>
+    </linearGradient>
+
+    <linearGradient id="docAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+
+    <linearGradient id="goldSeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <!-- Glowing Lattice Gradients -->
+    <linearGradient id="quantumGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+
+    <!-- Filters for 3D Lighting & Glow -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="dropShadow3D" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="ambientLight" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0ea5e9" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="450" rx="20" fill="url(#bgGlow)"/>
+
+  <!-- Geometric Post-Quantum Lattice Background Grid -->
+  <g opacity="0.12" stroke="#38bdf8" stroke-width="1.2">
+    <!-- Isometric Grid Lines -->
+    <path d="M100,50 L400,225 L700,50 M100,120 L400,295 L700,120 M100,190 L400,365 L700,190"/>
+    <path d="M400,225 L400,420 M250,137 L250,332 M550,137 L550,332 M175,93 L175,288 M625,93 L625,288"/>
+    <line x1="100" y1="50" x2="100" y2="400"/>
+    <line x1="700" y1="50" x2="700" y2="400"/>
+  </g>
+
+  <!-- Floating Threshold Multi-Party Quantum Nodes (k-of-n) -->
+  <!-- Node 1 (Top Left - Kepsek) -->
+  <g transform="translate(190, 110)" filter="url(#neonGlow)">
+    <circle cx="0" cy="0" r="14" fill="#0284c7" opacity="0.8"/>
+    <circle cx="0" cy="0" r="7" fill="#38bdf8"/>
+    <line x1="10" y1="10" x2="160" y2="90" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+    <text x="-25" y="-18" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" fill="#7dd3fc">P1 (Kepsek)</text>
+  </g>
+
+  <!-- Node 2 (Bottom Left - Wakasek) -->
+  <g transform="translate(140, 260)" filter="url(#neonGlow)">
+    <circle cx="0" cy="0" r="14" fill="#0d9488" opacity="0.8"/>
+    <circle cx="0" cy="0" r="7" fill="#2dd4bf"/>
+    <line x1="12" y1="-8" x2="190" y2="-40" stroke="#14b8a6" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+    <text x="-35" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" fill="#5eead4">P2 (Wakasek)</text>
+  </g>
+
+  <!-- Node 3 (Top Right - TU) -->
+  <g transform="translate(610, 110)" filter="url(#neonGlow)">
+    <circle cx="0" cy="0" r="14" fill="#2563eb" opacity="0.8"/>
+    <circle cx="0" cy="0" r="7" fill="#93c5fd"/>
+    <line x1="-10" y1="10" x2="-160" y2="90" stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+    <text x="-15" y="-18" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" fill="#bfdbfe">P3 (TU)</text>
+  </g>
+
+  <!-- Node 4 (Bottom Right - Bendahara) -->
+  <g transform="translate(660, 260)" filter="url(#neonGlow)">
+    <circle cx="0" cy="0" r="14" fill="#0284c7" opacity="0.8"/>
+    <circle cx="0" cy="0" r="7" fill="#38bdf8"/>
+    <line x1="-12" y1="-8" x2="-190" y2="-40" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+    <text x="-15" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" fill="#7dd3fc">P4 (Bendahara)</text>
+  </g>
+
+  <!-- Node 5 (Top Center - Komite) -->
+  <g transform="translate(400, 50)" filter="url(#neonGlow)">
+    <circle cx="0" cy="0" r="12" fill="#6366f1" opacity="0.8"/>
+    <circle cx="0" cy="0" r="6" fill="#a5b4fc"/>
+    <line x1="0" y1="12" x2="0" y2="80" stroke="#818cf8" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+    <text x="-30" y="-14" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600" fill="#c7d2fe">P5 (Komite)</text>
+  </g>
+
+  <!-- Central 3D Platform Shadow -->
+  <ellipse cx="400" cy="380" rx="180" ry="35" fill="#000000" opacity="0.5" filter="url(#dropShadow3D)"/>
+
+  <!-- 3D SHIELD BASE (Left & Right Isometric Facets) -->
+  <g filter="url(#dropShadow3D)">
+    <!-- Left Shield Facet -->
+    <path d="M400,105 L260,165 L260,265 C260,335 340,380 400,405 Z" fill="url(#shieldLeft)"/>
+    <!-- Right Shield Facet -->
+    <path d="M400,105 L540,165 L540,265 C540,335 460,380 400,405 Z" fill="url(#shieldRight)"/>
+    <!-- Shield Top Bevel Rim -->
+    <path d="M400,105 L260,165 L285,175 L400,125 L515,175 L540,165 Z" fill="url(#shieldTop)" opacity="0.7"/>
+    <!-- Central Shield Seam (Gloss Highlight) -->
+    <line x1="400" y1="110" x2="400" y2="400" stroke="#bae6fd" stroke-width="3" opacity="0.6"/>
+  </g>
+
+  <!-- 3D FLOATING INSTITUTIONAL DOCUMENT (Glassmorphic) -->
+  <g transform="translate(0, -10)" filter="url(#dropShadow3D)">
+    <!-- Document Body -->
+    <path d="M330,150 L470,150 L470,305 C470,312 464,318 457,318 L343,318 C336,318 330,312 330,305 Z"
+          fill="url(#docFront)" stroke="#ffffff" stroke-width="2" stroke-opacity="0.8"/>
+
+    <!-- Document Folded Corner (3D Dog-ear) -->
+    <path d="M445,150 L470,175 L445,175 Z" fill="#cbd5e1"/>
+    <path d="M445,150 L470,175 L445,175 Z" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Document Header Ribbon (PQC Cyan-Blue) -->
+    <rect x="345" y="170" width="85" height="8" rx="4" fill="url(#docAccent)"/>
+
+    <!-- Simulated Document Text Lines -->
+    <rect x="345" y="190" width="110" height="5" rx="2.5" fill="#94a3b8" opacity="0.7"/>
+    <rect x="345" y="204" width="95" height="5" rx="2.5" fill="#94a3b8" opacity="0.7"/>
+    <rect x="345" y="218" width="105" height="5" rx="2.5" fill="#94a3b8" opacity="0.7"/>
+    <rect x="345" y="232" width="75" height="5" rx="2.5" fill="#94a3b8" opacity="0.7"/>
+
+    <!-- 3D Gold Institutional Wax Seal & Checkmark -->
+    <g transform="translate(370, 275)" filter="url(#ambientLight)">
+      <circle cx="0" cy="0" r="18" fill="url(#goldSeal)" stroke="#fef08a" stroke-width="2"/>
+      <path d="M-6,0 L-2,5 L8,-5" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Digital Pen / Quantum Signing Quill (3D Tilt) -->
+    <g transform="translate(425, 260) rotate(-35)" filter="url(#dropShadow3D)">
+      <!-- Pen Body -->
+      <path d="M0,0 L8,-45 L14,-45 L6,0 Z" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <!-- Pen Nib -->
+      <polygon points="0,0 6,0 3,10" fill="#38bdf8"/>
+      <!-- Glowing Tip Beam -->
+      <circle cx="3" cy="11" r="3" fill="#22d3ee" filter="url(#neonGlow)"/>
+    </g>
+  </g>
+
+  <!-- Glowing Post-Quantum Lattice Rings around the Core -->
+  <g filter="url(#neonGlow)" opacity="0.75">
+    <ellipse cx="400" cy="270" rx="160" ry="60" fill="none" stroke="url(#quantumGlow)" stroke-width="2.5" stroke-dasharray="12,16"/>
+  </g>
+
+  <!-- Foreground Title Banner & Branding -->
+  <g transform="translate(400, 425)" text-anchor="middle">
+    <text font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="700" letter-spacing="3" fill="#e2e8f0">
+      TTD-DIGITAL <tspan fill="#38bdf8">·</tspan> THRESHOLD ML-DSA <tspan fill="#2dd4bf">FIPS 204</tspan>
+    </text>
+  </g>
+</svg>

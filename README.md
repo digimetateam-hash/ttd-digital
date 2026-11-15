@@ -1,4 +1,22 @@
-# Threshold Post-Quantum Document Signing (ML-DSA / FIPS 204)
+<p align="center">
+  <img src="assets/logo-3d.png" alt="TTD-Digital 3D Post-Quantum Threshold Signing Logo" width="720" style="border-radius: 16px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);" />
+</p>
+
+<h1 align="center">Threshold Post-Quantum Document Signing (ML-DSA / FIPS 204)</h1>
+
+<p align="center">
+  <em>Sistem Tanda Tangan Dokumen Resmi Institusi Berbasis Ambang Batas (k-dari-n) Tahan Komputasi Kuantum</em>
+</p>
+
+<p align="center">
+  <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Standard-NIST%20FIPS%20204%20(ML--DSA--65)-0284c7?style=for-the-badge&logo=shield" alt="FIPS 204"></a>
+  <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Quorum-k--dari--n%20Threshold-0d9488?style=for-the-badge" alt="Threshold Quorum"></a>
+  <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/UI%20Design-Material%20Design%203-1a56db?style=for-the-badge" alt="Material Design 3"></a>
+  <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Test%20Suite-15%2F15%20Passed%20(100%25)-10b981?style=for-the-badge" alt="Tests Passed"></a>
+  <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Cloud-Streamlit%20Ready-ff4b4b?style=for-the-badge&logo=streamlit" alt="Streamlit Cloud"></a>
+</p>
+
+---
 
 > **Judul Riset:** *Threshold Post-Quantum Document Signing for Institutional Workflows: Design, Integration, and Empirical Evaluation*  
 > **Algoritma Dasar:** ML-DSA (FIPS 204 / Dilithium) dengan fallback Ed25519.
@@ -64,6 +82,9 @@ streamlit run app.py
 ## Struktur Berkas
 
 ```
+├── assets/
+│   ├── logo-3d.png                # Visual Render 3D Hero Banner Landing Page
+│   └── logo-3d.svg                # Vektor 3D Isometric Logo (Lattice & Shield)
 ├── docs/
 │   ├── ERD.md                     # Entity Relationship Diagram & Relasi Data
 │   ├── SCHEMA.md                  # Spesifikasi Skema Database, DDL SQL & Batasan Kripto
