@@ -74,3 +74,4 @@ Dokumen ini menetapkan aturan bisnis, kebijakan kriptografi, batasan integritas 
   * Seluruh rangkaian uji negatif (isi dokumen diubah, ambang kurang dari $k$, duplikasi signer, replay ID lain, penggantian signer) wajib mencapai **tingkat kelulusan 100% (semua manipulasi harus tertolak)** sebelum sistem dinyatakan layak pakai.
 * **RR-02 (Metrik Benchmark RQ1 & RQ4):**
   * Pengukuran latensi penandatanganan dan verifikasi wajib diulang minimal 30 kali iterasi, dengan pelaporan statistik berbasis **Median** dan **Interquartile Range (IQR)** untuk menghindari bias outlier latensi jaringan.
+
