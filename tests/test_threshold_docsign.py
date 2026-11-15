@@ -118,3 +118,4 @@ class TestRQ3ThreatModelNegativeTests:
         doc = b"Surat Keputusan 123"
         with pytest.raises(ValueError, match="bukan penanda tangan yang terdaftar"):
             tds.sign_document(doc, "SK-123", default_policy, backend, group, ["kepsek", "wakasek", "orang_asing"])
+

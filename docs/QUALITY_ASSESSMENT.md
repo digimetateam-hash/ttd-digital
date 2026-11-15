@@ -113,3 +113,4 @@ tests/test_threshold_docsign.py::TestRQ3ThreatModelNegativeTests::test_unregiste
 2. **Langkah Pengembangan Berikutnya:**
    * Integrasi modul Rust `lattice-safe/threshold-ml-dsa` melalui Foreign Function Interface (FFI) Python untuk menggantikan modul komparasi murni.
    * Uji coba simulasi jaringan WAN terdistribusi (RQ4) menggunakan alat simulasi latensi paket (`tc/netem` atau Docker container).
+

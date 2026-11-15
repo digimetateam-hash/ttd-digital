@@ -69,7 +69,13 @@ streamlit run app.py
 │   ├── SCHEMA.md                  # Spesifikasi Skema Database, DDL SQL & Batasan Kripto
 │   ├── RULES.md                   # Aturan Bisnis, Kriptografi & Tata Kelola Forensik
 │   ├── DESIGN_MATERIAL3.md        # Panduan Desain Material Design 3 (M3) & UI/UX
-│   └── QUALITY_ASSESSMENT.md      # Laporan Evaluasi Kualitas Perangkat Lunak & RQ Matrix
+│   ├── QUALITY_ASSESSMENT.md      # Laporan Evaluasi Kualitas Perangkat Lunak & RQ Matrix
+│   └── EVALUATION_REPORT.md       # Laporan Hasil Uji Evaluasi Empiris Lengkap (30 Runs)
+├── scripts/
+│   └── evaluate_empirical.py      # Skrip Eksekusi Benchmark & Simulasi Jaringan RQ1-RQ4
+├── reports/
+│   ├── benchmark_rq1_30runs.csv   # Data mentah benchmark 30 runs per konfigurasi
+│   └── simulation_rq4_network.csv # Data mentah simulasi jaringan & signer offline
 ├── tests/
 │   └── test_threshold_docsign.py  # Suite Uji Otomatis & Uji Negatif Model Ancaman (RQ3)
 ├── pytest.ini                     # Konfigurasi pengujian pytest

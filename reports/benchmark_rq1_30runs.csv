@@ -1,0 +1,4 @@
+Algoritma,"Konfigurasi (k, n)",k,n,Ukuran Multisig (Bytes),Ukuran True Threshold (Bytes),Sign Median (ms),Sign IQR (ms),Verify Median (ms),Verify IQR (ms),Pengulangan
+ML-DSA-65,"(2, 3)",2,3,6618,3309,0.175,0.075,0.094,0.001,30
+ML-DSA-65,"(3, 5)",3,5,9927,3309,0.294,0.112,0.141,0.0,30
+ML-DSA-65,"(5, 9)",5,9,16545,3309,0.48,0.139,0.234,0.002,30

@@ -1,0 +1,5 @@
+Kondisi Jaringan,RTT Rata-Rata (ms),Packet Drop Rate,Total Latensi Selesai Median (ms),Total Latensi IQR (ms),Status Kuorum (3 dari 5)
+Localhost / Shared Memory,0.1,0.0%,0.41,0.11,SUKSES (Toleran terhadap 2 Offline)
+Campus LAN (Ethernet/WiFi-6),2.5,0.5%,3.36,0.73,SUKSES (Toleran terhadap 2 Offline)
+Regional WAN (Jaringan Sekolah),28.0,2.0%,36.96,7.26,SUKSES (Toleran terhadap 2 Offline)
+Cellular 4G/LTE (Signer Bergerak),95.0,5.0%,122.33,31.8,SUKSES (Toleran terhadap 2 Offline)
