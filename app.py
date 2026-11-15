@@ -29,6 +29,9 @@ try:
 except ImportError:
     pypdf = None
 
+# Import asisten AI anti-halusinasi
+import ai_auditor
+
 # Import modul threshold_docsign
 import threshold_docsign as tds
 
@@ -190,6 +193,66 @@ with tab1:
         st.markdown(f"**Digest Pengikat (`bound_digest`):**")
         st.code(f"{digest.hex()[:32]}...", language="text")
         st.caption("Digest mengikat mutlak isi dokumen asli (Word/Excel/PDF), nomor surat, ambang k, dan daftar penanda tangan.")
+
+    # ---------- Asisten Dokumen AI (Anti-Halusinasi) ----------
+    with st.expander("🤖 Asisten AI Dokumen Resmi (Groq LPU · Strict Grounding · Anti-Halu)", expanded=False):
+        st.markdown("*Asisten AI beroperasi pada **Temperature 0.0 (deterministik murni)** dengan aturan verifikasi kutipan langsung (verbatim citation) untuk mencegah halusinasi.*")
+        
+        # Ekstrak teks kontekstual untuk audit AI
+        current_groq_key = ai_auditor.get_groq_api_key()
+        if not current_groq_key:
+            current_groq_key = st.text_input(
+                "🔑 Masukkan Groq API Key (atau simpan di Streamlit Secrets):",
+                type="password",
+                help="Bisa disimpan permanen di Streamlit Cloud -> Settings -> Secrets (GROQ_API_KEY)"
+            )
+            
+        text_for_ai = ""
+        if "Unggah Berkas" in input_mode and uploaded_file is not None:
+            if file_ext == "docx" and docx:
+                try:
+                    d_obj = docx.Document(io.BytesIO(doc_bytes))
+                    text_for_ai = "\n".join([p.text for p in d_obj.paragraphs if p.text.strip()])
+                except Exception:
+                    text_for_ai = ""
+            elif file_ext == "xlsx" and openpyxl:
+                try:
+                    wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
+                    s_list = []
+                    for sname in wb.sheetnames[:3]:
+                        df_s = pd.read_excel(io.BytesIO(doc_bytes), sheet_name=sname)
+                        s_list.append(f"Sheet '{sname}':\n" + df_s.head(20).to_string())
+                    text_for_ai = "\n\n".join(s_list)
+                except Exception:
+                    text_for_ai = ""
+            elif file_ext == "pdf" and pypdf:
+                try:
+                    p_reader = pypdf.PdfReader(io.BytesIO(doc_bytes))
+                    text_for_ai = "\n".join([page.extract_text() or "" for page in p_reader.pages[:5]])
+                except Exception:
+                    text_for_ai = ""
+        else:
+            text_for_ai = doc_content if 'doc_content' in locals() else "SURAT KEPUTUSAN BERSAMA 2026"
+            
+        col_btn_ai, col_q_ai = st.columns([1, 2])
+        with col_btn_ai:
+            btn_audit = st.button("🔍 Jalankan Audit Faktual & Deteksi Risiko", use_container_width=True)
+        with col_q_ai:
+            q_user = st.text_input("Atau ajukan pertanyaan spesifik tentang dokumen ini:", placeholder="Contoh: Berapa nominal anggaran atau pihak yang bertanda tangan?")
+            btn_ask = st.button("💬 Tanyakan ke AI")
+            
+        if btn_audit or (q_user and btn_ask):
+            with st.spinner("Membedah naskah dokumen secara objektif..."):
+                target_q = q_user if (btn_ask and q_user) else None
+                ai_res = ai_auditor.analyze_document_content(
+                    text_for_ai,
+                    doc_name=doc_preview_title or doc_id,
+                    custom_question=target_q,
+                    api_key=current_groq_key
+                )
+                st.markdown("#### 📋 Hasil Audit Cerdas Dokumen:")
+                st.markdown(ai_res)
+                st.caption("🧠 Model: Groq Cloud LPU (Qwen 3.8 27B) | Parameter: Temperature 0.0 (Anti-Halu) | Strict Grounding.")
 
     st.markdown("---")
     st.subheader("2. Persetujuan Kuorum Penanda Tangan")
