@@ -13,6 +13,7 @@
   <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Quorum-k--dari--n%20Threshold-0d9488?style=for-the-badge" alt="Threshold Quorum"></a>
   <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/UI%20Design-Material%20Design%203-1a56db?style=for-the-badge" alt="Material Design 3"></a>
   <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Test%20Suite-15%2F15%20Passed%20(100%25)-10b981?style=for-the-badge" alt="Tests Passed"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License"></a>
   <a href="https://github.com/digimetateam-hash/ttd-digital"><img src="https://img.shields.io/badge/Cloud-Streamlit%20Ready-ff4b4b?style=for-the-badge&logo=streamlit" alt="Streamlit Cloud"></a>
 </p>
 
@@ -160,9 +161,26 @@ streamlit run app.py
 │   └── test_threshold_docsign.py  # Suite Uji Otomatis & Uji Negatif Model Ancaman (RQ3)
 ├── pytest.ini                     # Konfigurasi pengujian pytest
 ├── app.py                         # Aplikasi utama dashboard Streamlit
+├── cert_generator.py              # Generator Sertifikat Keaslian Dokumen Resmi (PDF)
+├── ai_auditor.py                  # Auditor Integritas Kripto AI (Groq LLM)
 ├── threshold_docsign.py           # Modul logika kriptografi & baseline evaluasi
 ├── PRD_Threshold-PQ-Signature.md  # Dokumen spesifikasi kebutuhan riset & referensi
 ├── requirements.txt               # Daftar pustaka Python untuk Streamlit Cloud
+├── LICENSE                        # Lisensi Open Source (Apache License 2.0)
 ├── .gitignore
 └── README.md                      # Dokumentasi proyek
 ```
+
+---
+
+## 📄 Lisensi (License)
+
+Proyek ini didistribusikan di bawah lisensi terbuka **[Apache License 2.0](LICENSE)**.
+
+### Mengapa Apache License 2.0?
+1. **Perlindungan Hak Paten (*Patent Grant*):** Memberikan perlindungan eksplisit terhadap klaim atau tuntutan paten terkait implementasi algoritma lattice-based cryptography dan skema threshold post-quantum.
+2. **Komersial & Institusional:** Memungkinkan adopsi bebas oleh instansi pemerintah, institusi pendidikan, dan korporasi perbankan tanpa biaya lisensi (*royalty-free*).
+3. **Penelitian & Replikasi Terbuka:** Menjamin kode dan artefak eksperimen dapat direplikasi, dimodifikasi, dan diaudit secara independen oleh komunitas kriptografi dan keamanan siber global.
+
+*Copyright (c) 2026 DigiMeta Team & TTD-Digital Contributors.*
+

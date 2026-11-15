@@ -169,3 +169,4 @@ def generate_signing_certificate_pdf(
     doc.build(elements)
     buffer.seek(0)
     return buffer.getvalue()
+
