@@ -32,6 +32,9 @@ except ImportError:
 # Import asisten AI anti-halusinasi
 import ai_auditor
 
+# Import generator sertifikat pengesahan resmi
+import cert_generator
+
 # Import modul threshold_docsign
 import threshold_docsign as tds
 
@@ -296,29 +299,64 @@ with tab1:
         
         if is_valid:
             st.success(f" Dokumen resmi **{doc_id}** sah secara hukum dan kriptografis! Kuorum terpenuhi ({len(selected_approvers)} >= {st.session_state.policy.k}).")
+            
+            # Tampilkan Sertifikat Pengesahan Resmi
+            st.markdown("""
+            <div style="background-color: #F0FDF4; border: 2px solid #16A34A; border-radius: 12px; padding: 18px; margin: 15px 0;">
+                <h4 style="color: #15803D; margin-top: 0;">🎖️ SERTIFIKAT PENGESAHAN DOKUMEN DIGITAL (FIPS 204 VALID)</h4>
+                <p style="color: #166534; font-size: 14px; margin-bottom: 8px;">
+                    Dokumen ini telah diverifikasi memenuhi seluruh syarat kuorum pasca-kuantum dan terikat permanen pada digest kriptografis <code>THRESHDOC-v0</code>.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Buat berkas PDF Sertifikat
+            pdf_cert_bytes = cert_generator.generate_signing_certificate_pdf(
+                doc_id=doc_id,
+                doc_title=doc_preview_title or "Surat Keputusan Resmi Institusi",
+                file_sha3=raw_sha3,
+                bound_digest=digest.hex(),
+                k_threshold=st.session_state.policy.k,
+                total_n=len(st.session_state.policy.signers),
+                signers=selected_approvers,
+                algorithm=f"{sample_alg} (NIST FIPS 204)",
+                is_valid=True
+            )
+            
+            col_d1, col_d2 = st.columns(2)
+            with col_d1:
+                if pdf_cert_bytes:
+                    st.download_button(
+                        label="📄 Unduh Sertifikat Pengesahan Resmi (.pdf)",
+                        data=pdf_cert_bytes,
+                        file_name=f"Sertifikat_Pengesahan_{doc_id}.pdf",
+                        mime="application/pdf",
+                        type="primary",
+                        use_container_width=True
+                    )
+            with col_d2:
+                # Ekspor paket tanda tangan JSON
+                sig_package = {
+                    "document_id": doc_id,
+                    "algorithm": sample_alg,
+                    "threshold_k": st.session_state.policy.k,
+                    "total_signers_n": len(st.session_state.policy.signers),
+                    "file_sha3_256": raw_sha3,
+                    "bound_digest": digest.hex(),
+                    "is_valid": is_valid,
+                    "signers": selected_approvers,
+                    "signature_bytes_total": st.session_state.backend.sig_bytes(sig),
+                    "signatures": sig
+                }
+                st.download_button(
+                    label="📥 Unduh Kredensial Kriptografis (.json)",
+                    data=json.dumps(sig_package, indent=2),
+                    file_name=f"{doc_id}_signature_package.json",
+                    mime="application/json",
+                    use_container_width=True
+                )
         else:
-            st.error(f"❌ Dokumen tidak sah! Jumlah pejabat yang menyetujui ({len(selected_approvers)}) kurang dari ambang minimal ({st.session_state.policy.k}).")
-
-        # Ekspor paket tanda tangan
-        sig_package = {
-            "document_id": doc_id,
-            "algorithm": sample_alg,
-            "threshold_k": st.session_state.policy.k,
-            "total_signers_n": len(st.session_state.policy.signers),
-            "file_sha3_256": raw_sha3,
-            "bound_digest": digest.hex(),
-            "is_valid": is_valid,
-            "signers": selected_approvers,
-            "signature_bytes_total": st.session_state.backend.sig_bytes(sig),
-            "signatures": sig
-        }
-        
-        st.download_button(
-            label="📥 Unduh Paket Tanda Tangan Resmi (.json)",
-            data=json.dumps(sig_package, indent=2),
-            file_name=f"{doc_id}_signature_package.json",
-            mime="application/json"
-        )
+            st.error(f"❌ DITOLAK: Kuorum tidak terpenuhi! Jumlah pejabat yang menyetujui ({len(selected_approvers)}) kurang dari ambang minimal ({st.session_state.policy.k}). Sertifikat Pengesahan DILARANG TERBIT.")
 
 # ---------- TAB 2: Uji Negatif & Keamanan (RQ3) ----------
 with tab2:

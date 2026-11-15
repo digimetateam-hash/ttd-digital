@@ -80,6 +80,8 @@ Proyek ini dirancang secara khusus untuk 4 kelompok pemangku kepentingan utama:
    - Analisis kesiapan format PDF/PAdES dan pendekatan *hybrid co-signature*.
 6. **🤖 Asisten AI Anti-Halusinasi (Strict Grounding):**
    - Didukung Groq Cloud LPU (`temperature: 0.0`) untuk audit faktual naskah SK Word, pendeteksian anomali sel Excel, dan Q&A berbasis kutipan langsung (*verbatim citation*).
+7. **🎖️ Penerbitan Otomatis Sertifikat Pengesahan PDF (Certificate of Authenticity):**
+   - Jika dan hanya jika verifikasi kuorum berstatus **SAH (Valid)**, sistem secara otomatis menerbitkan **Sertifikat Pengesahan Dokumen Digital (.pdf)** resmi yang memuat nomor UUID sertifikat, stempel waktu, bukti hash SHA3-256, kuorum pejabat, dan jaminan FIPS 204. Jika kuorum gagal atau dokumen diubah, sertifikat **dilarang terbit**.
 
 ---
 
