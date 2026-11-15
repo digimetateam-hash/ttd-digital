@@ -59,11 +59,12 @@ Proyek ini dirancang secara khusus untuk 4 kelompok pemangku kepentingan utama:
 
 ## Fitur Utama
 
-1. **📁 Dukungan Multi-Format Dokumen Resmi Institusi:**
-   - 📝 **Microsoft Word (`.docx`)**: Surat Keputusan (SK), Perjanjian/Kontrak, Surat Tugas, Ijazah.
-   - 📊 **Microsoft Excel (`.xlsx`)**: Rencana Anggaran Biaya (RAB / RAPBS), Laporan Keuangan, Daftar Honorarium.
-   - 📑 **Format PDF (`.pdf`)**: Salinan dokumen portabel resmi, dokumen arsip PAdES.
-   - 📄 **Teks Langsung / Input Form**: Untuk drafting naskah dan verifikasi instan.
+1. **📁 Dukungan Lengkap Multi-Format Dokumen & Mesin OCR Forensik:**
+   - 📝 **Semua Varian Dokumen Word:** `.docx`, `.doc` (Legacy Word 97-2003 OLE2), `.docm`, `.dotx`, `.dotm`, `.rtf` (Rich Text), dan `.odt` (OpenDocument Text).
+   - 📊 **Semua Varian Dokumen Excel / Tabel:** `.xlsx`, `.xls` (Legacy Excel 97-2003 BIFF8), `.xlsm`, `.xltx`, `.xltm`, `.csv`, `.tsv`, dan `.ods` (OpenDocument Spreadsheet).
+   - 📑 **Semua Varian PDF & Deteksi Hasil Scan:** Dokumen PDF berbasis teks digital, PDF terenkripsi/berproteksi, dan PDF berbasis citra grafis (*scanned*).
+   - 🖼️ **Citra Dokumen Pindai (Scan & Foto):** `.png`, `.jpg`, `.jpeg`, `.tiff`, `.bmp`, `.webp`.
+   - 🔍 **Mesin Ekstraksi Tesseract OCR Terintegrasi:** Dilengkapi deteksi otomatis PDF hasil scan dan sakelar paksa OCR (*deep OCR analysis*) dengan dukungan multi-bahasa Indonesia & Inggris (`ind+eng`).
 2. **✍️ Alur Penandatanganan Kolektif ($k$-dari-$n$):**
    - Mendukung penandatanganan bersama tanpa satu pihak pun memegang kunci utuh.
    - Pengikatan kriptografis (*domain-separated digest* `THRESHDOC-v0`) yang mengikat biner dokumen (Word/Excel/PDF), ID unik dokumen, nilai ambang $k$, dan identitas seluruh penanda tangan.
@@ -158,14 +159,17 @@ streamlit run app.py
 │   ├── benchmark_rq1_30runs.csv   # Data mentah benchmark 30 runs per konfigurasi
 │   └── simulation_rq4_network.csv # Data mentah simulasi jaringan & signer offline
 ├── tests/
-│   └── test_threshold_docsign.py  # Suite Uji Otomatis & Uji Negatif Model Ancaman (RQ3)
+│   ├── test_threshold_docsign.py  # Suite Uji Otomatis & Uji Negatif Model Ancaman (RQ3)
+│   └── test_doc_analyzer.py       # Suite Uji Multi-Format Word, Excel, PDF & Mesin OCR
 ├── pytest.ini                     # Konfigurasi pengujian pytest
 ├── app.py                         # Aplikasi utama dashboard Streamlit
+├── doc_analyzer.py                # Mesin analisis forensik berkas multi-format & Tesseract OCR
 ├── cert_generator.py              # Generator Sertifikat Keaslian Dokumen Resmi (PDF)
 ├── ai_auditor.py                  # Auditor Integritas Kripto AI (Groq LLM)
 ├── threshold_docsign.py           # Modul logika kriptografi & baseline evaluasi
 ├── PRD_Threshold-PQ-Signature.md  # Dokumen spesifikasi kebutuhan riset & referensi
 ├── requirements.txt               # Daftar pustaka Python untuk Streamlit Cloud
+├── packages.txt                   # Paket sistem OS Debian untuk Streamlit Cloud (Tesseract OCR)
 ├── LICENSE                        # Lisensi Open Source (Apache License 2.0)
 ├── .gitignore
 └── README.md                      # Dokumentasi proyek

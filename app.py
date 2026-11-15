@@ -35,6 +35,9 @@ import ai_auditor
 # Import generator sertifikat pengesahan resmi
 import cert_generator
 
+# Import modul analisis multi-format & mesin OCR
+import doc_analyzer
+
 # Import modul threshold_docsign
 import threshold_docsign as tds
 
@@ -131,52 +134,109 @@ with tab1:
         
         if "Unggah Berkas" in input_mode:
             uploaded_file = st.file_uploader(
-                "Pilih berkas dokumen (.docx, .xlsx, .pdf):",
-                type=["docx", "xlsx", "pdf"],
-                help="Sistem akan menghitung hash biner kriptografis SHA3-256 dari seluruh isi berkas."
+                "Pilih berkas dokumen resmi (Word, Excel, PDF, Scan/Citra):",
+                type=doc_analyzer.ALL_SUPPORTED_EXTENSIONS,
+                help=(
+                    "Mendukung semua format:\n"
+                    "- Word: .docx, .doc (97-2003 OLE2), .docm, .dotx, .rtf, .odt\n"
+                    "- Excel: .xlsx, .xls (97-2003 BIFF8), .xlsm, .csv, .tsv, .ods\n"
+                    "- PDF: Dokumen teks digital maupun dokumen hasil pindai (scanned)\n"
+                    "- Citra Scan: .png, .jpg, .jpeg, .tiff, .bmp, .webp via OCR"
+                )
             )
+
+            col_ocr1, col_ocr2 = st.columns([2, 1])
+            with col_ocr1:
+                force_ocr = st.checkbox(
+                    "🔍 Paksa Analisis OCR Mendalam (Tesseract 5.5 - Rekomendasi Dokumen Scan/Stempel)",
+                    value=False,
+                    help="Secara otomatis merender halaman dokumen ke citra beresolusi tinggi dan mengekstraksi teks tulisan/stempel via OCR."
+                )
+            with col_ocr2:
+                ocr_lang_choice = st.selectbox(
+                    "Bahasa OCR:",
+                    ["ind+eng", "ind", "eng"],
+                    index=0,
+                    format_func=lambda x: {
+                        "ind+eng": "🇮🇩+🇬🇧 Indonesia & English",
+                        "ind": "🇮🇩 Bahasa Indonesia",
+                        "eng": "🇬🇧 English"
+                    }.get(x, x)
+                )
             
             if uploaded_file is not None:
                 doc_bytes = uploaded_file.getvalue()
                 doc_preview_title = uploaded_file.name
                 file_size_kb = len(doc_bytes) / 1024
-                file_ext = uploaded_file.name.split(".")[-1].lower()
-                
-                st.info(f"📄 Berkas: **{uploaded_file.name}** ({file_size_kb:.2f} KB) — Format: **{file_ext.upper()}**")
-                
-                # Pratinjau berdasarkan format berkas
-                with st.expander(f"👁️ Pratinjau Isi Dokumen ({uploaded_file.name})", expanded=True):
-                    if file_ext == "docx" and docx:
-                        try:
-                            doc_obj = docx.Document(io.BytesIO(doc_bytes))
-                            paragraphs = [p.text for p in doc_obj.paragraphs if p.text.strip()]
-                            st.write(f"**Total Paragraf:** {len(doc_obj.paragraphs)} | **Tabel:** {len(doc_obj.tables)}")
-                            st.text_area("Pratinjau Teks Dokumen Word:", value="\n\n".join(paragraphs[:10]), height=150, disabled=True)
-                        except Exception as e:
-                            st.warning(f"Gagal memuat pratinjau Word: {e}")
-                            
-                    elif file_ext == "xlsx" and openpyxl:
-                        try:
-                            wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
-                            sheet_names = wb.sheetnames
-                            selected_sheet = st.selectbox("Pilih Lembar Kerja (Sheet):", sheet_names)
-                            df_excel = pd.read_excel(io.BytesIO(doc_bytes), sheet_name=selected_sheet)
-                            st.write(f"**Dimensi Tabel:** {df_excel.shape[0]} baris × {df_excel.shape[1]} kolom")
-                            st.dataframe(df_excel.head(10), use_container_width=True)
-                        except Exception as e:
-                            st.warning(f"Gagal memuat pratinjau Excel: {e}")
-                            
-                    elif file_ext == "pdf" and pypdf:
-                        try:
-                            pdf_reader = pypdf.PdfReader(io.BytesIO(doc_bytes))
-                            st.write(f"**Jumlah Halaman:** {len(pdf_reader.pages)}")
-                            page1_text = pdf_reader.pages[0].extract_text() if len(pdf_reader.pages) > 0 else ""
-                            st.text_area("Pratinjau Teks Halaman 1 PDF:", value=page1_text[:500] if page1_text else "(Konten Grafis/Teks Kosong)", height=150, disabled=True)
-                        except Exception as e:
-                            st.warning(f"Gagal memuat pratinjau PDF: {e}")
+                file_ext = uploaded_file.name.split(".")[-1].lower() if "." in uploaded_file.name else ""
+
+                # Eksekusi analisis multi-format terpadu & OCR
+                with st.spinner("Menganalisis struktur dokumen & mengekstrak konten/OCR..."):
+                    doc_analysis = doc_analyzer.analyze_document_unified(
+                        doc_bytes,
+                        uploaded_file.name,
+                        run_ocr_forced=force_ocr,
+                        ocr_lang=ocr_lang_choice
+                    )
+
+                # Tampilkan lencana status dokumen
+                ocr_badge = " | 🔍 **OCR Aktif**" if doc_analysis.ocr_performed else ""
+                scan_badge = " | ⚠️ **Terdeteksi Scanned PDF**" if doc_analysis.is_scanned_pdf else ""
+                st.success(
+                    f"📄 **{uploaded_file.name}** ({file_size_kb:.2f} KB) — "
+                    f"Kategori: **{doc_analysis.doc_type}** (`.{doc_analysis.extension}`){scan_badge}{ocr_badge}"
+                )
+
+                if doc_analysis.warnings:
+                    for w in doc_analysis.warnings:
+                        st.caption(f"ℹ️ {w}")
+
+                # Pratinjau berdasarkan kategori berkas
+                with st.expander(f"👁️ Pratinjau & Analisis Forensik Dokumen ({uploaded_file.name})", expanded=True):
+                    # Ringkasan Metadata Forensik
+                    meta_cols = st.columns(4)
+                    meta_cols[0].metric("Kategori Dokumen", doc_analysis.doc_type)
+                    meta_cols[1].metric("Ukuran Berkas", f"{file_size_kb:.1f} KB")
+                    meta_cols[2].metric("Penulis (Author)", doc_analysis.author if doc_analysis.author else "-")
+                    meta_cols[3].metric("Tgl Dibuat", doc_analysis.created_at[:10] if doc_analysis.created_at else "-")
+
+                    if doc_analysis.doc_type == "Word":
+                        st.markdown(f"**Statistik:** Paragraf: `{doc_analysis.summary_stats.get('paragraf', '-')}` | Tabel: `{doc_analysis.summary_stats.get('tabel', '-')}` | Kata: `{doc_analysis.summary_stats.get('kata', '-')}`")
+                        st.text_area(
+                            "Pratinjau Teks Dokumen Word:",
+                            value=doc_analysis.extracted_text[:1500] if doc_analysis.extracted_text else "(Teks kosong atau format biner khusus)",
+                            height=150,
+                            disabled=True
+                        )
+
+                    elif doc_analysis.doc_type == "Excel":
+                        sheets = list(doc_analysis.excel_sheets.keys())
+                        if sheets:
+                            sel_sheet = st.selectbox("Pilih Lembar Kerja (Sheet):", sheets)
+                            df_cur = doc_analysis.excel_sheets[sel_sheet]
+                            st.write(f"**Dimensi Tabel:** {df_cur.shape[0]} baris × {df_cur.shape[1]} kolom")
+                            st.dataframe(df_cur.head(15), use_container_width=True)
+                        else:
+                            st.text_area("Pratinjau Isi Excel:", value=doc_analysis.extracted_text[:1000], height=150, disabled=True)
+
+                    elif doc_analysis.doc_type == "PDF":
+                        st.markdown(f"**Jumlah Halaman:** `{doc_analysis.page_count}` | **Terenkripsi:** `{'Ya' if doc_analysis.metadata.get('encrypted') else 'Tidak'}`")
+                        if doc_analysis.ocr_performed:
+                            st.info(f"Mesin OCR: **{doc_analysis.ocr_engine}** berhasil mengekstraksi teks dari citra dokumen.")
+                            st.text_area("Hasil Ekstraksi OCR Tesseract:", value=doc_analysis.ocr_text[:2000], height=160, disabled=True)
+                        else:
+                            st.text_area("Pratinjau Teks Digital PDF:", value=doc_analysis.extracted_text[:1500] if doc_analysis.extracted_text.strip() else "(Dokumen berbasis gambar/scan. Centang 'Paksa Analisis OCR' di atas untuk membaca teks).", height=150, disabled=True)
+
+                    elif doc_analysis.doc_type == "Image":
+                        st.info(f"Citra Dokumen Dianalisis via **{doc_analysis.ocr_engine}**.")
+                        st.text_area("Hasil Ekstraksi OCR Citra:", value=doc_analysis.ocr_text if doc_analysis.ocr_text else "(Tidak ada teks terbaca dari citra)", height=150, disabled=True)
+
+                    else:
+                        st.text_area("Pratinjau Teks:", value=doc_analysis.extracted_text[:1000], height=150, disabled=True)
             else:
-                st.caption("Silakan unggah dokumen Word, Excel, atau PDF di atas untuk pengesahan.")
+                st.caption("Silakan unggah dokumen Word (.docx/.doc), Excel (.xlsx/.xls/.csv), PDF, atau Citra Pindai di atas.")
                 doc_bytes = b"SAMPLE_DOCUMENT_FOR_INITIALIZATION"
+                doc_analysis = None
         else:
             doc_content = st.text_area(
                 "Isi Dokumen (Teks / Surat Keputusan):",
@@ -184,6 +244,8 @@ with tab1:
                 height=150
             )
             doc_bytes = doc_content.encode("utf-8")
+            doc_analysis = None
+
             
     with col_in2:
         st.markdown("**Pengikatan Kriptografis (Domain Separation):**")
@@ -211,31 +273,11 @@ with tab1:
             )
             
         text_for_ai = ""
-        if "Unggah Berkas" in input_mode and uploaded_file is not None:
-            if file_ext == "docx" and docx:
-                try:
-                    d_obj = docx.Document(io.BytesIO(doc_bytes))
-                    text_for_ai = "\n".join([p.text for p in d_obj.paragraphs if p.text.strip()])
-                except Exception:
-                    text_for_ai = ""
-            elif file_ext == "xlsx" and openpyxl:
-                try:
-                    wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
-                    s_list = []
-                    for sname in wb.sheetnames[:3]:
-                        df_s = pd.read_excel(io.BytesIO(doc_bytes), sheet_name=sname)
-                        s_list.append(f"Sheet '{sname}':\n" + df_s.head(20).to_string())
-                    text_for_ai = "\n\n".join(s_list)
-                except Exception:
-                    text_for_ai = ""
-            elif file_ext == "pdf" and pypdf:
-                try:
-                    p_reader = pypdf.PdfReader(io.BytesIO(doc_bytes))
-                    text_for_ai = "\n".join([page.extract_text() or "" for page in p_reader.pages[:5]])
-                except Exception:
-                    text_for_ai = ""
+        if "Unggah Berkas" in input_mode and uploaded_file is not None and doc_analysis is not None:
+            text_for_ai = doc_analysis.extracted_text
         else:
             text_for_ai = doc_content if 'doc_content' in locals() else "SURAT KEPUTUSAN BERSAMA 2026"
+
             
         col_btn_ai, col_q_ai = st.columns([1, 2])
         with col_btn_ai:
