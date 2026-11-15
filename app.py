@@ -73,6 +73,36 @@ if is_pq:
 else:
     st.warning(f"🟡 **Backend Aktif: {sample_alg}** — Berjalan dalam mode fallback klasik.")
 
+# Informasi Landasan Hukum & Risiko Urgensi Kritis
+with st.expander("⚖️ Landasan Hukum Resmi (UU ITE, UU PDP, PP 71/2019, SPBE) & 4 Risiko Urgensi Nasional", expanded=False):
+    col_law, col_risk = st.columns(2)
+    with col_law:
+        st.markdown("#### 📜 Payung Hukum & Regulasi RI")
+        st.markdown(
+            "1. **UU ITE (UU No. 1/2024 jo. UU No. 11/2008) Pasal 11:**\n"
+            "   Menjamin keabsahan TTE jika data pembuatan tanda tangan hanya dikuasai penanda tangan (*non-escrow*) dan perubahan dokumen setelah diteken dapat diketahui (`THRESHDOC-v0` SHA3-256).\n"
+            "2. **PP No. 71/2019 (PSTE) Pasal 52–63:**\n"
+            "   Kewajiban penyelenggaraan TTE andal, integritas data, dan pencegahan penyangkalan (*non-repudiation*).\n"
+            "3. **UU PDP (UU No. 27/2022) Pasal 35:**\n"
+            "   Kewajiban pengendali data melindungi dokumen berisi data pribadi dari kebocoran/peretasan melalui kriptografi mutakhir.\n"
+            "4. **Perpres SPBE No. 95/2018 & BSSN No. 4/2021:**\n"
+            "   Standarisasi persetujuan naskah dinas elektronik berjenjang dan mitigasi keusangan kriptografi (*cryptographic sunsetting*).\n"
+            "5. **Standar Global NIST FIPS 204 & RFC 5652:**\n"
+            "   Standar resmi ML-DSA dan kontainer ASN.1 CMS untuk arsip digital yang diakui secara internasional."
+        )
+    with col_risk:
+        st.markdown("#### 🚨 4 Risiko Kritis & Urgensi Nasional")
+        st.markdown(
+            "1. **Ancaman Harvest Now, Decrypt Later (HNDL):**\n"
+            "   Dokumen negara yang dicuri hari ini akan dibongkar kunci RSA/ECC-nya saat komputer kuantum tiba (~2030) untuk memalsukan tanda tangan secara retroaktif.\n"
+            "2. **Kerapuhan Otorisasi Tunggal (Single Point of Failure):**\n"
+            "   Pada sistem biasa, 1 token USB pejabat yang dicuri dapat mengesahkan anggaran miliaran rupiah. Skema ambang $k$-dari-$n$ mewajibkan kuorum minimal bersama.\n"
+            "3. **Masa Berlaku Hukum Dokumen Jangka Panjang (10–30 Tahun):**\n"
+            "   Ijazah, SK, dan Sertifikat berlaku puluhan tahun. Jika masih menggunakan RSA, dokumen tersebut akan kehilangan kekuatan pembuktian hukum di masa depan.\n"
+            "4. **Ketiadaan Key Escrow & Kedaulatan Kunci:**\n"
+            "   Kunci privat tidak pernah disatukan di server vendor pihak ketiga. Masing-masing pejabat memegang pecahan kuncinya sendiri."
+        )
+
 # ---------- Sidebar ----------
 with st.sidebar:
     if os.path.exists("assets/logo-3d.png"):

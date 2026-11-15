@@ -25,3 +25,4 @@ Direktori ini memuat **7 berkas sampel dokumen uji coba realistis** yang diranca
 3. Di dropdown **"⚡ Muat Cepat Contoh Dokumen Uji Coba (Preset Dataset)"**, pilih salah satu berkas di atas.
 4. Sistem akan otomatis memuat biner dokumen, menampilkan pratinjau analisis forensik, menjalankan kalkulasi hash **SHA3-256**, dan mengaktifkan mesin **Tesseract OCR** (untuk dokumen scan).
 5. Anda dapat langsung menguji pengesahan kuorum $k$-dari-$n$, menjalankan **AI Auditor (Groq LPU)**, serta mengunduh **Sertifikat Pengesahan PDF Resmi**.
+

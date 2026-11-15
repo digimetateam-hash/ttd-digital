@@ -57,6 +57,55 @@ Proyek ini dirancang secara khusus untuk 4 kelompok pemangku kepentingan utama:
 
 ---
 
+## ⚖️ Landasan Hukum & Regulasi Resmi (Undang-Undang RI & Standar Global)
+
+Penerapan sistem tanda tangan dokumen ini berpijak pada ketentuan perundang-undangan dan standar keamanan siber resmi:
+
+1. **🇮🇩 UU ITE (UU No. 11/2008 jo. UU No. 19/2016 jo. UU No. 1/2024):**
+   * **Pasal 11 Ayat (1):** Tanda Tangan Elektronik memiliki kekuatan hukum dan akibat hukum sah jika: (1) Data pembuatan TTE hanya terkait kepada penanda tangan; (2) Data pembuatan TTE berada dalam penguasaan penanda tangan; (3) Segala perubahan terhadap informasi elektronik setelah penandatanganan dapat diketahui.
+   * *Kepatuhan Sistem:* Terpenuhi secara mutlak melalui arsitektur *non-escrow* (kunci privat utuh tidak pernah berada di server) dan digest pengikat `THRESHDOC-v0` (SHA3-256) yang langsung mendeteksi pengubahan 1 huruf/angka pada naskah.
+2. **🇮🇩 PP No. 71 Tahun 2019 (Penyelenggaraan Sistem dan Transaksi Elektronik / PSTE):**
+   * **Pasal 52 s.d. 63:** Mengatur kewajiban integritas dokumen, pencegahan penyangkalan (*non-repudiation*), dan tata kelola pengamanan data Penyelenggara Sertifikasi Elektronik (PSrE).
+   * **Pasal 3:** Kewajiban Penyelenggara Sistem Elektronik menyelenggarakan sistem secara andal, aman, dan bertanggung jawab terhadap ancaman teknologi.
+3. **🇮🇩 UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP):**
+   * **Pasal 35:** Pengendali Data Pribadi wajib melindungi data pribadi dari pemrosesan tidak sah, kebocoran, atau pemalsuan melalui sistem kriptografi mutakhir dan pengamanan yang andal, disertai sanksi pidana dan denda bagi kelalaian sistem yang menyebabkan data bocor.
+4. **🇮🇩 Perpres No. 95 Tahun 2018 tentang Sistem Pemerintahan Berbasis Elektronik (SPBE):**
+   * Mengharuskan instansi pemerintah menggunakan layanan naskah dinas elektronik (TNDE), SPK, dan kontrak pengadaan dengan jaminan keaslian serta tata kelola persetujuan berjenjang/kolektif tanpa risiko pemalsuan sepihak.
+5. **🇮🇩 Peraturan BSSN No. 4 Tahun 2021 tentang Standar Kriptografi Sistem Elektronik:**
+   * Menetapkan regulasi algoritma kriptografi resmi negara dan kewajiban mempersiapkan transisi penggantian algoritma yang akan usang (*cryptographic sunsetting*).
+6. **🌐 Standar Global NIST FIPS 204 & RFC 5652:**
+   * Standar resmi dunia untuk *Module-Lattice-Based Digital Signature Algorithm* (ML-DSA) serta format kontainer *Cryptographic Message Syntax* (CMS ASN.1) untuk interoperabilitas arsip digital internasional.
+
+---
+
+## 🚨 Risiko Kritis & Urgensi Nasional (Mengapa Harus Sekarang?)
+
+```mermaid
+flowchart TD
+    subgraph URGENSI ["⚠️ TREN ANCAMAN DAN URGENSI KRITIS"]
+        A["Serangan HNDL<br/>(Harvest Now, Decrypt Later)"] --> D["Krisis Integritas Dokumen Negara"]
+        B["Kerapuhan Titik Tunggal<br/>(Single Point of Compromise)"] --> D
+        C["Kedaluwarsa Masa Hukum<br/>Dokumen Jangka Panjang (10-30 Thn)"] --> D
+    end
+
+    subgraph SOLUSI ["🛡️ SOLUSI PROYEK INI"]
+        D --> E["Kriptografi Kisi FIPS 204<br/>(Tahan Algoritma Shor)"]
+        D --> F["Ambang Kuorum k-dari-n<br/>(Mencegah Otorisasi Liar)"]
+        D --> G["Non-Escrow Architecture<br/>(Tanpa Kunci Terpusat)"]
+    end
+```
+
+1. **Ancaman *Harvest Now, Decrypt / Forge Later* (HNDL):**
+   * Peretas dan pihak asing saat ini mengumpulkan dokumen resmi negara dan berkas TTE bersertifikat. Saat komputer kuantum komersial tiba (*Q-Day*, diproyeksikan 2029–2035), Algoritma Shor akan membongkar kunci RSA/ECC dan **memalsukan tanda tangan pejabat secara retroaktif**. Dokumen yang ditandatangani hari ini harus sudah dilindungi oleh ML-DSA FIPS 204.
+2. **Kerapuhan Titik Tunggal Otorisasi (*Single Point of Failure*):**
+   * Tanda tangan digital konvensional bergantung pada 1 pejabat dengan 1 token USB. Jika token dicuri, hilang, atau disalahgunakan admin/staf, dokumen anggaran bernilai miliaran rupiah dapat disahkan sendirian. Skema **Threshold $k$-dari-$n$** menjamin dokumen hanya sah jika disetujui kuorum bersama (misal 3 dari 5 pejabat).
+3. **Masa Berlaku Hukum Dokumen yang Berjangka Panjang (10 s.d. 30 Tahun):**
+   * Ijazah, SK Kepegawaian, Sertifikat Tanah, dan Perjanjian Kerjasama (PKS) berlaku puluhan tahun. Jika hari ini masih menggunakan RSA-2048/ECC, dalam 7-10 tahun ke depan dokumen tersebut **kehilangan kepastian hukum** karena keaslian tanda tangannya dapat disangkal di pengadilan akibat kriptografinya telah terbongkar.
+4. **Ketiadaan *Key Escrow* & Kedaulatan Kunci Digital Institusi:**
+   * Mencegah penyimpanan kunci privat terpusat di server vendor pihak ketiga (*cloud HSM*). Pecahan kunci disimpan mandiri oleh masing-masing pejabat penanda tangan, memastikan institusi memiliki kedaulatan digital mutlak.
+
+---
+
 ## Fitur Utama
 
 1. **📁 Dukungan Lengkap Multi-Format Dokumen & Mesin OCR Forensik:**
