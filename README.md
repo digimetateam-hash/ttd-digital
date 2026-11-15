@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo-3d.png" alt="TTD-Digital 3D Post-Quantum Threshold Signing Logo" width="720" style="border-radius: 16px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);" />
+  <img src="assets/logo-3d.png" alt="TTD-Digital 3D Post-Quantum Threshold Signing Logo" width="200" style="max-width: 200px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);" />
 </p>
 
 <h1 align="center">Threshold Post-Quantum Document Signing (ML-DSA / FIPS 204)</h1>

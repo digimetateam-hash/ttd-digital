@@ -66,6 +66,8 @@ else:
 
 # ---------- Sidebar ----------
 with st.sidebar:
+    if os.path.exists("assets/logo-3d.png"):
+        st.image("assets/logo-3d.png", width=200)
     st.header("⚙️ Kebijakan Ambang (Policy)")
     st.write("Konfigurasi kuorum $k$-dari-$n$ pejabat penanda tangan:")
     
