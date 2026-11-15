@@ -108,3 +108,4 @@ font = "sans serif"
 1. **Rasio Kontras Warna:** Semua teks pada tombol dan kartu memiliki rasio kontras minimal $4.5:1$ terhadap warna latar.
 2. **Indikator Non-Warna:** Status sah/ditolak tidak hanya bergantung pada warna hijau/merah, tetapi wajib disertai ikon tegas (✅ / ❌) dan teks deskriptif eksplisit.
 3. **Responsivitas:** Tata letak kolom multi-penanda tangan adaptif: 5 kolom pada layar desktop/tablet, dan beralih otomatis ke *single-column card list* pada layar ponsel pintar.
+

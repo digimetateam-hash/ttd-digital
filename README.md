@@ -68,7 +68,11 @@ streamlit run app.py
 │   ├── ERD.md                     # Entity Relationship Diagram & Relasi Data
 │   ├── SCHEMA.md                  # Spesifikasi Skema Database, DDL SQL & Batasan Kripto
 │   ├── RULES.md                   # Aturan Bisnis, Kriptografi & Tata Kelola Forensik
-│   └── DESIGN_MATERIAL3.md        # Panduan Desain Material Design 3 (M3) & UI/UX
+│   ├── DESIGN_MATERIAL3.md        # Panduan Desain Material Design 3 (M3) & UI/UX
+│   └── QUALITY_ASSESSMENT.md      # Laporan Evaluasi Kualitas Perangkat Lunak & RQ Matrix
+├── tests/
+│   └── test_threshold_docsign.py  # Suite Uji Otomatis & Uji Negatif Model Ancaman (RQ3)
+├── pytest.ini                     # Konfigurasi pengujian pytest
 ├── app.py                         # Aplikasi utama dashboard Streamlit
 ├── threshold_docsign.py           # Modul logika kriptografi & baseline evaluasi
 ├── PRD_Threshold-PQ-Signature.md  # Dokumen spesifikasi kebutuhan riset & referensi
