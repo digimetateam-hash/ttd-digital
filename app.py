@@ -133,8 +133,25 @@ with tab1:
         doc_id = st.text_input("Nomor / ID Dokumen Resmi:", value="SK-REKTOR-2026/089")
         
         if "Unggah Berkas" in input_mode:
+            sample_options = {
+                "Pilih berkas sendiri (drag & drop di bawah)": None,
+                "📄 [Word .docx] 01_SK_Rektor_Kurikulum_PQC_2026.docx": "samples/01_SK_Rektor_Kurikulum_PQC_2026.docx",
+                "📊 [Excel .xlsx] 02_RAB_Anggaran_BOS_Lab_PQC.xlsx (Multi-Sheet)": "samples/02_RAB_Anggaran_BOS_Lab_PQC.xlsx",
+                "📑 [PDF Digital] 03_BAST_Pengadaan_Server_PQC.pdf": "samples/03_BAST_Pengadaan_Server_PQC.pdf",
+                "🔍 [PDF Scan - Uji OCR] 04_Surat_Izin_Operasional_Scan.pdf": "samples/04_Surat_Izin_Operasional_Scan.pdf",
+                "📈 [CSV Tabel] 05_Laporan_Keuangan_Pengadaan.csv": "samples/05_Laporan_Keuangan_Pengadaan.csv",
+                "📜 [Word RTF Legacy] 06_Surat_Edaran_Sosialisasi_Legacy.rtf": "samples/06_Surat_Edaran_Sosialisasi_Legacy.rtf",
+                "🖼️ [Citra Pindai - Uji OCR] 07_Ijazah_Sertifikat_Fisik_Scan.png": "samples/07_Ijazah_Sertifikat_Fisik_Scan.png"
+            }
+            sel_sample_label = st.selectbox(
+                "⚡ Muat Cepat Contoh Dokumen Uji Coba (Preset Dataset):",
+                list(sample_options.keys()),
+                help="Pilih dokumen sampel resmi siap pakai untuk menguji parsing Word, Excel multi-sheet, PDF digital, atau OCR pada PDF/Citra hasil scan secara instan."
+            )
+            selected_sample_path = sample_options[sel_sample_label]
+
             uploaded_file = st.file_uploader(
-                "Pilih berkas dokumen resmi (Word, Excel, PDF, Scan/Citra):",
+                "Atau unggah berkas dokumen Anda sendiri (Word, Excel, PDF, Scan/Citra):",
                 type=doc_analyzer.ALL_SUPPORTED_EXTENSIONS,
                 help=(
                     "Mendukung semua format:\n"
@@ -164,17 +181,28 @@ with tab1:
                     }.get(x, x)
                 )
             
+            active_file_name = None
+            active_file_bytes = None
+
             if uploaded_file is not None:
-                doc_bytes = uploaded_file.getvalue()
-                doc_preview_title = uploaded_file.name
+                active_file_bytes = uploaded_file.getvalue()
+                active_file_name = uploaded_file.name
+            elif selected_sample_path and os.path.exists(selected_sample_path):
+                with open(selected_sample_path, "rb") as sf:
+                    active_file_bytes = sf.read()
+                active_file_name = os.path.basename(selected_sample_path)
+
+            if active_file_bytes is not None and active_file_name is not None:
+                doc_bytes = active_file_bytes
+                doc_preview_title = active_file_name
                 file_size_kb = len(doc_bytes) / 1024
-                file_ext = uploaded_file.name.split(".")[-1].lower() if "." in uploaded_file.name else ""
+                file_ext = active_file_name.split(".")[-1].lower() if "." in active_file_name else ""
 
                 # Eksekusi analisis multi-format terpadu & OCR
                 with st.spinner("Menganalisis struktur dokumen & mengekstrak konten/OCR..."):
                     doc_analysis = doc_analyzer.analyze_document_unified(
                         doc_bytes,
-                        uploaded_file.name,
+                        active_file_name,
                         run_ocr_forced=force_ocr,
                         ocr_lang=ocr_lang_choice
                     )
@@ -182,8 +210,9 @@ with tab1:
                 # Tampilkan lencana status dokumen
                 ocr_badge = " | 🔍 **OCR Aktif**" if doc_analysis.ocr_performed else ""
                 scan_badge = " | ⚠️ **Terdeteksi Scanned PDF**" if doc_analysis.is_scanned_pdf else ""
+                preset_badge = " (Preset Demo)" if uploaded_file is None else ""
                 st.success(
-                    f"📄 **{uploaded_file.name}** ({file_size_kb:.2f} KB) — "
+                    f"📄 **{active_file_name}**{preset_badge} ({file_size_kb:.2f} KB) — "
                     f"Kategori: **{doc_analysis.doc_type}** (`.{doc_analysis.extension}`){scan_badge}{ocr_badge}"
                 )
 
@@ -192,7 +221,7 @@ with tab1:
                         st.caption(f"ℹ️ {w}")
 
                 # Pratinjau berdasarkan kategori berkas
-                with st.expander(f"👁️ Pratinjau & Analisis Forensik Dokumen ({uploaded_file.name})", expanded=True):
+                with st.expander(f"👁️ Pratinjau & Analisis Forensik Dokumen ({active_file_name})", expanded=True):
                     # Ringkasan Metadata Forensik
                     meta_cols = st.columns(4)
                     meta_cols[0].metric("Kategori Dokumen", doc_analysis.doc_type)
@@ -273,7 +302,7 @@ with tab1:
             )
             
         text_for_ai = ""
-        if "Unggah Berkas" in input_mode and uploaded_file is not None and doc_analysis is not None:
+        if "Unggah Berkas" in input_mode and active_file_bytes is not None and doc_analysis is not None:
             text_for_ai = doc_analysis.extracted_text
         else:
             text_for_ai = doc_content if 'doc_content' in locals() else "SURAT KEPUTUSAN BERSAMA 2026"

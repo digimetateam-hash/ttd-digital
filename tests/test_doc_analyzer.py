@@ -107,3 +107,29 @@ def test_tesseract_ocr_execution():
     text, err = run_tesseract_ocr(png_bytes, lang="ind+eng")
     assert err is None
     assert "VERIFIKASI OCR BERHASIL" in text
+
+
+
+def test_all_samples_dataset():
+    """Menguji parsing dan integritas seluruh 7 berkas dataset sampel."""
+    import os
+    samples_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "samples")
+    assert os.path.exists(samples_dir), "Folder samples harus ada"
+    
+    expected_files = [
+        "01_SK_Rektor_Kurikulum_PQC_2026.docx",
+        "02_RAB_Anggaran_BOS_Lab_PQC.xlsx",
+        "03_BAST_Pengadaan_Server_PQC.pdf",
+        "04_Surat_Izin_Operasional_Scan.pdf",
+        "05_Laporan_Keuangan_Pengadaan.csv",
+        "06_Surat_Edaran_Sosialisasi_Legacy.rtf",
+        "07_Ijazah_Sertifikat_Fisik_Scan.png"
+    ]
+    for fn in expected_files:
+        fp = os.path.join(samples_dir, fn)
+        assert os.path.exists(fp), f"Berkas sampel {fn} tidak ditemukan"
+        with open(fp, "rb") as f:
+            data = f.read()
+        res = analyze_document_unified(data, fn, run_ocr_forced=True)
+        assert res.doc_type in ["Word", "Excel", "PDF", "Image"]
+        assert len(res.extracted_text) > 0, f"Ekstraksi teks kosong pada {fn}"

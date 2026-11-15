@@ -153,8 +153,18 @@ streamlit run app.py
 │   ├── DESIGN_MATERIAL3.md        # Panduan Desain Material Design 3 (M3) & UI/UX
 │   ├── QUALITY_ASSESSMENT.md      # Laporan Evaluasi Kualitas Perangkat Lunak & RQ Matrix
 │   └── EVALUATION_REPORT.md       # Laporan Hasil Uji Evaluasi Empiris Lengkap (30 Runs)
+├── samples/                       # Dataset Uji Coba Multi-Format & Citra OCR Siap Pakai
+│   ├── 01_SK_Rektor_Kurikulum_PQC_2026.docx
+│   ├── 02_RAB_Anggaran_BOS_Lab_PQC.xlsx
+│   ├── 03_BAST_Pengadaan_Server_PQC.pdf
+│   ├── 04_Surat_Izin_Operasional_Scan.pdf
+│   ├── 05_Laporan_Keuangan_Pengadaan.csv
+│   ├── 06_Surat_Edaran_Sosialisasi_Legacy.rtf
+│   ├── 07_Ijazah_Sertifikat_Fisik_Scan.png
+│   └── README.md                  # Katalog & Panduan Lengkap Dataset Sampel
 ├── scripts/
-│   └── evaluate_empirical.py      # Skrip Eksekusi Benchmark & Simulasi Jaringan RQ1-RQ4
+│   ├── evaluate_empirical.py      # Skrip Eksekusi Benchmark & Simulasi Jaringan RQ1-RQ4
+│   └── generate_sample_dataset.py # Skrip Pembangkit Berkas Sampel Uji Coba Multi-Format
 ├── reports/
 │   ├── benchmark_rq1_30runs.csv   # Data mentah benchmark 30 runs per konfigurasi
 │   └── simulation_rq4_network.csv # Data mentah simulasi jaringan & signer offline
