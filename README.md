@@ -27,18 +27,24 @@ Aplikasi web interaktif berbasis **Streamlit** untuk mendemonstrasikan, menguji,
 
 ## Fitur Utama
 
-1. **✍️ Alur Penandatanganan Kolektif ($k$-dari-$n$):**
+1. **📁 Dukungan Multi-Format Dokumen Resmi Institusi:**
+   - 📝 **Microsoft Word (`.docx`)**: Surat Keputusan (SK), Perjanjian/Kontrak, Surat Tugas, Ijazah.
+   - 📊 **Microsoft Excel (`.xlsx`)**: Rencana Anggaran Biaya (RAB / RAPBS), Laporan Keuangan, Daftar Honorarium.
+   - 📑 **Format PDF (`.pdf`)**: Salinan dokumen portabel resmi, dokumen arsip PAdES.
+   - 📄 **Teks Langsung / Input Form**: Untuk drafting naskah dan verifikasi instan.
+2. **✍️ Alur Penandatanganan Kolektif ($k$-dari-$n$):**
    - Mendukung penandatanganan bersama tanpa satu pihak pun memegang kunci utuh.
-   - Pengikatan kriptografis (*domain-separated digest* `THRESHDOC-v0`) yang mengikat konten dokumen, ID unik dokumen, nilai ambang $k$, dan identitas seluruh penanda tangan.
-2. **🛡️ Uji Negatif & Verifikasi Model Ancaman (RQ3):**
-   - Uji otomatis penolakan manipulasi isi dokumen (*tampering*).
+   - Pengikatan kriptografis (*domain-separated digest* `THRESHDOC-v0`) yang mengikat biner dokumen (Word/Excel/PDF), ID unik dokumen, nilai ambang $k$, dan identitas seluruh penanda tangan.
+3. **🛡️ Uji Negatif & Verifikasi Model Ancaman (RQ3):**
+   - Uji otomatis penolakan manipulasi isi dokumen (*tampering* 1 huruf/angka di Word/Excel membatalkan tanda tangan).
    - Penolakan kuorum di bawah ambang ($< k$).
    - Pencegahan pemutaran ulang tanda tangan (*replay attack*) ke dokumen/ID lain.
    - Pencegahan penggantian daftar penanda tangan (*policy substitution*).
-3. **📊 Evaluasi & Benchmark Kinerja Empiris (RQ1 & RQ4):**
+4. **📊 Evaluasi & Benchmark Kinerja Empiris (RQ1 & RQ4):**
    - Pengukuran latensi penandatanganan dan verifikasi (median & IQR).
    - Analisis perbandingan ukuran tanda tangan antara *Multisig Baseline* ($O(k)$) dan *True Threshold ML-DSA* ($O(1)$).
-4. **📦 Evaluasi Kontainer CMS & Kompatibilitas Dokumen (RQ2):**
+   - Ekspor laporan benchmark dan jejak audit langsung ke format **Excel (`.xlsx`)**.
+5. **📦 Evaluasi Kontainer CMS & Kompatibilitas Dokumen (RQ2):**
    - Pemeriksaan kontainer ASN.1 CMS `SignedData` dengan OID `ML-DSA-65` (`2.16.840.1.101.3.4.3.18`).
    - Analisis kesiapan format PDF/PAdES dan pendekatan *hybrid co-signature*.
 
