@@ -5,7 +5,7 @@
 <h1 align="center">Threshold Post-Quantum Document Signing (ML-DSA / FIPS 204)</h1>
 
 <p align="center">
-  <em>Sistem Tanda Tangan Dokumen Resmi Institusi Berbasis Ambang Batas (k-dari-n) Tahan Komputasi Kuantum</em>
+  <em>Sistem Tanda Tangan Dokumen (TTD) Resmi Institusi Berbasis Ambang Batas (k-dari-n) Tahan Komputasi Kuantum</em>
 </p>
 
 <p align="center">
@@ -47,6 +47,26 @@ Aplikasi web interaktif berbasis **Streamlit** untuk mendemonstrasikan, menguji,
 5. **📦 Evaluasi Kontainer CMS & Kompatibilitas Dokumen (RQ2):**
    - Pemeriksaan kontainer ASN.1 CMS `SignedData` dengan OID `ML-DSA-65` (`2.16.840.1.101.3.4.3.18`).
    - Analisis kesiapan format PDF/PAdES dan pendekatan *hybrid co-signature*.
+6. **🤖 Asisten AI Anti-Halusinasi (Strict Grounding):**
+   - Didukung Groq Cloud LPU (`temperature: 0.0`) untuk audit faktual naskah SK Word, pendeteksian anomali sel Excel, dan Q&A berbasis kutipan langsung (*verbatim citation*).
+
+---
+
+## Daftar Istilah & Singkatan (Glossary)
+
+Untuk memudahkan pemahaman para peneliti, penguji, dan pengembang, berikut adalah daftar istilah dan singkatan yang digunakan dalam repositori ini:
+
+| Istilah / Singkatan | Kepanjangan / Nama Resmi | Penjelasan Singkat dalam Sistem Ini |
+|:---|:---|:---|
+| **TTD** | **Tanda Tangan Dokumen** / Digital | Proses pengesahan berkas resmi institusi secara elektronik oleh para pejabat berwenang. |
+| **PQ / PQC** | **Post-Quantum Cryptography** | Kriptografi pasca-kuantum yang dirancang tahan terhadap serangan komputer kuantum (algoritma Shor). |
+| **ML-DSA (FIPS 204)**| **Module-Lattice-Based Digital Signature Algorithm** | Standar resmi tanda tangan digital pasca-kuantum NIST (sebelumnya dikenal sebagai *CRYSTALS-Dilithium*). |
+| **$k$-dari-$n$** | **Threshold Quorum ($k$-of-$n$)** | Skema pembagian otorisasi: dokumen baru sah bila minimal $k$ pihak berwenang dari total $n$ pihak menyetujui. |
+| **RQ1 – RQ4** | **Research Questions 1 s.d. 4** | Empat pertanyaan riset empiris yang dijawab tuntas melalui eksperimen benchmark dan uji model ancaman. |
+| **CMS** | **Cryptographic Message Syntax** (RFC 5652) | Format kontainer standar ASN.1 (`pkcs7-signedData`) untuk membungkus data bertanda tangan dan sertifikat. |
+| **PAdES** | **PDF Advanced Electronic Signatures** | Profil standar tanda tangan dokumen PDF yang diakui secara legal di tingkat internasional (ETSI EN 319 142). |
+| **SK, RAB, RAPBS** | **Surat Keputusan, Rencana Anggaran Biaya, RAPB Sekolah** | Jenis dokumen resmi institusi sekolah/pemerintah yang didukung penuh (Word `.docx` dan Excel `.xlsx`). |
+| **Non-Escrow** | **No Trusted Third-Party Key Custody** | Prinsip keamanan di mana kunci privat utuh **tidak pernah** dibuat atau disimpan di server mana pun. |
 
 ---
 
