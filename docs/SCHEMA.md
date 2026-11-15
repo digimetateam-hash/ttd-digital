@@ -219,3 +219,4 @@ INSERT INTO users (user_id, institution_id, nip_nik, full_name, email, role) VAL
 INSERT INTO signing_groups (group_id, institution_id, policy_name, threshold_k, total_n, algorithm, group_public_key)
 VALUES ('grp-001', 'inst-001', 'Kebijakan Pengesahan Ijazah & SK Kelulusan (3 dari 5)', 3, 5, 'ML-DSA-65', '\x00');
 ```
+

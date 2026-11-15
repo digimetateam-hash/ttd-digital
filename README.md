@@ -66,7 +66,8 @@ streamlit run app.py
 ```
 ├── docs/
 │   ├── ERD.md                     # Entity Relationship Diagram & Relasi Data
-│   └── SCHEMA.md                  # Spesifikasi Skema Database, DDL SQL & Batasan Kripto
+│   ├── SCHEMA.md                  # Spesifikasi Skema Database, DDL SQL & Batasan Kripto
+│   └── RULES.md                   # Aturan Bisnis, Kriptografi & Tata Kelola Forensik
 ├── app.py                         # Aplikasi utama dashboard Streamlit
 ├── threshold_docsign.py           # Modul logika kriptografi & baseline evaluasi
 ├── PRD_Threshold-PQ-Signature.md  # Dokumen spesifikasi kebutuhan riset & referensi
