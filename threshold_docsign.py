@@ -150,3 +150,4 @@ def bench(configs=((2, 3), (3, 5), (5, 9)), runs=5):
             size = be.sig_bytes(sig)
         rows.append((be.name, k, n, size, statistics.median(t_sign), statistics.median(t_ver)))
     return rows
+
